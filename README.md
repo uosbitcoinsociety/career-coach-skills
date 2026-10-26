@@ -1,5 +1,7 @@
 # Career Coach — free AI careers coach as Claude Code skills
 
+**Not technical? Use the website:** https://uosbitcoinsociety.github.io/career-coach-skills/ (no sign-up, works on your phone)
+
 From blank page to offer: a CV that passes the skim, a list of roles with real deadlines, a tracker that tells you **what to apply to next**, drafted answers, online-test drills, HireVue practice and live mock interviews.
 
 It plans, drafts and scores. It never applies or sends anything for you.

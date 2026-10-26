@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Career Coach: free AI interview and application practice</title>
+<meta name="description" content="Free AI careers coach for students. Mock interviews, HireVue practice, CV help and an application tracker. No sign-up.">
+<style>
+:root{--bg:#faf8f4;--card:#fff;--ink:#1c1b19;--mute:#6b665d;--line:#e6e1d8;--acc:#e8820c;--acc2:#b85f00;--ok:#2f7d4f;--warn:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#141311;--card:#1d1c19;--ink:#efece6;--mute:#a19b90;--line:#33302b;--acc:#f5a03a;--acc2:#ffc072}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:860px;margin:0 auto;padding:24px 18px 60px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0}h2{font-size:1.25rem;margin:0 0 .4em}
+.lede{color:var(--mute);margin:0 0 18px}
+nav.tabs{display:flex;gap:8px;margin:18px 0}
+nav.tabs button{flex:1;padding:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem}
+nav.tabs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.tool{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;text-align:left;color:var(--ink);font:inherit}
+.tool:hover{border-color:var(--acc)}.tool b{display:block;font-size:1.05rem}.tool span{color:var(--mute);font-size:.92rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.95rem}label small{font-weight:400;color:var(--mute)}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:90px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.row{grid-template-columns:1fr}}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn{padding:11px 16px;border-radius:9px;border:0;background:var(--acc);color:#1c1b19;font-weight:700;cursor:pointer;font-size:1rem;text-decoration:none}
+.btn.alt{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn:hover{filter:brightness(1.05)}
+.note{font-size:.88rem;color:var(--mute);margin-top:10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;font-weight:600;display:none;max-width:90vw;text-align:center;z-index:9}
+.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0 0}.steps li{counter-increment:s;padding:6px 0 6px 34px;position:relative}
+.steps li:before{content:counter(s);position:absolute;left:0;top:5px;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#1c1b19;font-weight:700;text-align:center;line-height:24px;font-size:.85rem}
+table{width:100%;border-collapse:collapse;font-size:.93rem}td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:600}td select{padding:4px;font-size:.9rem}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.8rem;font-weight:700}
+.late{background:#fde2df;color:var(--warn)}.soon{background:#fff1d6;color:#8a5300}.fine{background:#e1f2e7;color:var(--ok)}
+.plan li{margin:4px 0}.x{background:none;border:0;color:var(--mute);cursor:pointer;font-size:1.1rem}
+footer{margin-top:40px;color:var(--mute);font-size:.85rem;text-align:center}
+.hidden{display:none}a{color:var(--acc2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Your free AI careers coach</h1>
+  <p class="lede">Mock interviews, video-interview practice, CV help and an application tracker. No sign-up, nothing to install. It works with the ChatGPT, Claude or Gemini account you already have, free ones included.</p>
+
+  <nav class="tabs">
+    <button id="t-coach" class="on" onclick="tab('coach')">🎤 Practise & write</button>
+    <button id="t-track" onclick="tab('track')">📋 My applications</button>
+  </nav>
+
+  <section id="coach">
+    <div class="grid" id="tools"></div>
+    <div class="panel hidden" id="form"></div>
+    <div class="panel" id="how">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>Pick what you want to practise and fill in the boxes. The more detail you give, the better the coaching.</li>
+        <li>Press <b>Open in ChatGPT</b> (or Claude / Gemini). Your coaching instructions are copied for you.</li>
+        <li>If the chat box is empty, paste: <b>Ctrl+V</b> on a laptop, or long-press on a phone. Then press send.</li>
+      </ol>
+      <p class="note">Your details only go to the AI you choose. This site has no server and doesn't save anything you type here.</p>
+    </div>
+  </section>
+
+  <section id="track" class="hidden">
+    <div class="panel">
+      <h2>What to do next</h2>
+      <div id="plan"></div>
+      <label>Hours you can spend on applications this week</label>
+      <input id="hours" type="number" min="1" max="40" value="6" style="max-width:120px" onchange="saveHours();render()">
+    </div>
+    <div class="panel">
+      <h2>Add an application</h2>
+      <div class="row">
+        <div><label>Company</label><input id="a-co" placeholder="e.g. Citi"></div>
+        <div><label>Role</label><input id="a-role" placeholder="e.g. Markets Summer Internship"></div>
+      </div>
+      <div class="row">
+        <div><label>Deadline <small>(leave blank if rolling)</small></label><input id="a-dl" type="date"></div>
+        <div><label>How much do you want it?</label><select id="a-pri"><option value="1">A lot</option><option value="2" selected>Normal</option><option value="3">Backup</option></select></div>
+      </div>
+      <label><input id="a-roll" type="checkbox" style="width:auto"> Rolling: they fill places as applications come in, so earlier is better</label>
+      <label>Link <small>(optional)</small></label><input id="a-link" placeholder="https://">
+      <div class="btns"><button class="btn" onclick="addApp()">Add</button></div>
+    </div>
+    <div class="panel">
+      <h2>All applications</h2>
+      <div id="list"></div>
+      <div class="btns">
+        <button class="btn alt" onclick="exportCSV()">Download spreadsheet (CSV)</button>
+        <button class="btn alt" onclick="exportICS()">Add deadlines to my calendar</button>
+      </div>
+      <p class="note">Saved in this browser only. Nobody else can see it, including us. If you clear your browser data it's gone, so download the spreadsheet now and then.</p>
+    </div>
+  </section>
+
+  <footer>Free and open source. Made by the University of Sheffield Bitcoin Society. Prefer Claude Code? <a href="https://github.com/uosbitcoinsociety/career-coach-skills">Install the skills</a>.</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- coaching tools ---------- */
+const RULES = `
+Rules for you, the coach:
+- Never invent experience, grades or facts about me. If you need something, ask me.
+- Ask ONE question at a time and wait for my answer.
+- Be honest and specific. No generic praise, no motivational filler.
+- Keep your messages short. Use bullet points.`;
+
+const COMMON = [
+  {id:"company",label:"Company",ph:"e.g. Citi, Deloitte, the NHS"},
+  {id:"role",label:"Role",ph:"e.g. Summer internship, Markets"},
+];
+const ABOUT = {id:"about",label:"About you",hint:"Degree, year, uni, jobs, societies, projects. Pasting your whole CV works too.",type:"area",ph:"2nd year Maths at Sheffield. Part-time barista. Treasurer of a society…"};
+
+const TOOLS = [
+ {key:"interview",icon:"🎤",title:"Mock interview",sub:"A realistic interviewer who asks follow-ups and gives you a verdict",
+  fields:[...COMMON,{id:"round",label:"Type of interview",type:"select",opts:["First round","Final round / superday","Technical","Behavioural (competency)","Case interview (consulting)","Not sure"]},
+          {id:"date",label:"When is it?",ph:"e.g. next Thursday"},ABOUT,{id:"ad",label:"Job description",hint:"Optional, but paste it if you have it.",type:"area"}],
+  build:v=>`You are an experienced interviewer at ${v.company||"[company]"} interviewing me for: ${v.role||"[role]"}. Interview type: ${v.round}. ${v.date?`My real interview is ${v.date}.`:""}
+
+About me:
+${v.about||"(ask me for my background first)"}
+${v.ad?`\nJob description:\n${v.ad}\n`:""}
+Run a realistic mock interview:
+1. Plan 8 questions in the order a real interviewer would ask them. Start with "Tell me about yourself" or "Walk me through your CV". Then motivation (why this company, why this role), then 2 competency questions (STAR), then 2 or 3 technical or role-specific questions that fit the job, and finish with "Do you have any questions for us?".
+2. Stay in character as the interviewer. Ask ONE question at a time. If an answer is vague, ask a real follow-up ("Why?", "What was the number?", "What would you do differently?"). Don't give feedback during the interview.
+3. After the last question, step out of character and give me a debrief:
+   - A score out of 10 for each answer, plus an overall verdict (hire / borderline / no hire) with the reason an interviewer would write down
+   - The 3 fixes that matter most, each with a better version of MY answer built from my real experience
+   - Anything I said that was factually wrong
+   - 3 good questions I could ask this interviewer
+${RULES}
+Start now with the first question.`},
+
+ {key:"video",icon:"🎥",title:"Video interview (HireVue)",sub:"Timed one-way video interview practice with scores and model answers",
+  fields:[...COMMON,ABOUT],
+  build:v=>`I have a one-way video interview (HireVue-style) for ${v.role||"[role]"} at ${v.company||"[company]"}. Coach me through a practice run.
+
+About me:
+${v.about||"(ask me for my background first)"}
+
+How the session works:
+1. Write 6 realistic questions: 2 motivation (why this company, why this role), 2 competency (STAR), 1 commercial awareness about the industry, 1 role-specific. Start with motivation.
+2. Give me ONE question at a time, in the platform's format: "Question 1 of 6. You have 30 seconds to prepare and 2 minutes to answer." I'll answer out loud and type or dictate what I said.
+3. After each answer, score it out of 10 on Structure (clear opening, STAR, a proper ending), Content (specific, about this company, has evidence and numbers) and Delivery (about 250–300 words is 2 minutes; filler words; hedging). Then give me 2 things that worked, the 1 fix that matters most, and a 90-second model answer using MY experience.
+4. At the end: my average score, my weakest question type, and an offer to redo the weakest one.
+Once, before we start, give 4 short tips for the recording itself (camera, light, notes, practice question).
+${RULES}`},
+
+ {key:"cv",icon:"📄",title:"CV: write, review or tailor",sub:"One page, readable by recruiters' screening software, with every bullet backed by a number",
+  fields:[{id:"mode",label:"What do you need?",type:"select",opts:["Review my CV and score it","Tailor my CV to a specific job","Build my CV from scratch"]},
+          {id:"cvtext",label:"Your CV or experience",hint:"Paste your CV as text. Starting from scratch? Just list what you've done.",type:"area"},
+          {id:"ad",label:"Job description",hint:"Only needed for tailoring.",type:"area"},{id:"country",label:"Country you're applying in",ph:"UK"}],
+  build:v=>`You are a recruiter who has screened thousands of student CVs. Country: ${v.country||"UK"}. Task: ${v.mode}.
+
+My CV / experience:
+${v.cvtext||"(I don't have one yet: interview me section by section)"}
+${v.ad?`\nThe job I'm applying for:\n${v.ad}\n`:""}
+How to work:
+- Review: score my CV out of 10 on impact (numbers), relevance, clarity, formatting, and how well screening software (ATS) can read it. Then give me the 5 most valuable edits, each as before → after.
+- Tailor: pick out the job's top 8 keywords and 3 must-have skills, match each to evidence in my CV, then reorder and reword my bullets to fit. NEVER add a skill I don't have. List any gaps for me to cover in an interview instead.
+- From scratch: interview me one section at a time (education, experience, leadership and societies, projects, skills, interests). For each experience ask what I did, for whom, what changed because of it, and whether there's a number.
+CV rules: one page. Most recent first. Education first for students. Bullets: strong verb + what I did + result with a number, 1–2 lines each, 3–5 per role. No photo or age (UK/US). One column with standard headings, so screening software can read it.
+At the end, give me the full finished CV in clean text I can paste into Word or Google Docs.
+${RULES}`},
+
+ {key:"answers",icon:"✍️",title:"Application questions & cover letters",sub:"\"Why us?\", \"why this role?\" and STAR answers, kept to the word limit",
+  fields:[...COMMON,{id:"question",label:"The exact question",ph:"e.g. Why do you want to work at Citi? (300 words)",type:"area"},{id:"limit",label:"Word or character limit",ph:"300 words"},ABOUT],
+  build:v=>`Help me answer an application question for ${v.role||"[role]"} at ${v.company||"[company]"}.
+
+Question: ${v.question||"[I'll paste it]"}
+Limit: ${v.limit||"[ask me]"}
+
+About me:
+${v.about||"(ask me first)"}
+
+How to work:
+1. If you can browse, find 1 or 2 recent, concrete facts about this company and team (a deal, a product, results, a project) and tell me where they came from. If you can't browse, say so and ask me for one. Never make facts up.
+2. If my best example for this question isn't in what I gave you, ask me ONE question to get it.
+3. Write the answer at 90–100% of the limit.
+   - Why this company: a specific fact → why it matters to me → a link to my experience. No generic "global leader" lines.
+   - Why this role: what the job actually involves day to day → evidence I'd be good at it.
+   - Competency questions: STAR. Keep Situation and Task to 1 line each, make Action most of it (say "I", not "we"), and end with a Result that has a number.
+4. Make it sound like a sharp student, not a brochure. Don't use: "passionate", "delve", "I am excited to", "furthermore", or long lists of three.
+5. Give the word count. Remind me ONCE to rewrite it in my own words, because many employers check for AI-written answers.
+${RULES}`},
+
+ {key:"tests",icon:"🧮",title:"Online test practice",sub:"Numerical, verbal, logical and situational-judgement questions with the fast methods",
+  fields:[{id:"company",label:"Company (if known)",ph:"e.g. PwC"},{id:"test",label:"Test type",type:"select",opts:["Numerical reasoning","Verbal reasoning","Logical / inductive reasoning","Situational judgement (SJT)","Not sure: mixed"]}],
+  build:v=>`I have an online assessment${v.company?` for ${v.company}`:""}: ${v.test}. Coach me.
+1. Explain the format in 3 bullets: question types, time per question, and how it's scored.
+2. Give me 8 practice questions in the same style as the real test, ONE at a time. Wait for my answer, then mark it and show me the FASTEST way to solve it, not just the answer.
+   - Numerical: put the data in a small text table. Use % change, ratios and currency conversion.
+   - Verbal: a short passage with True / False / Cannot Say, and explain the "Cannot Say" traps.
+   - Logical: describe the shape sequences in words. Teach me which order to look for rules in.
+   - SJT: score each option against this company's published values.
+3. At the end: my score, the kind of mistakes I kept making, and 2 drills to fix them.
+${RULES}`},
+
+ {key:"network",icon:"🤝",title:"Messages to recruiters & alumni",sub:"LinkedIn notes, emails, thank-yous and follow-ups",
+  fields:[{id:"who",label:"Who are you messaging?",ph:"e.g. Sheffield alumna, Associate in rates sales at Barclays"},
+          {id:"goal",label:"What do you want?",type:"select",opts:["A 15-minute chat for advice","A thank-you after an interview or event","A follow-up (no reply yet)","Advice on applying to their team"]},
+          {id:"channel",label:"Where?",type:"select",opts:["LinkedIn connection note","LinkedIn message","Email"]},ABOUT],
+  build:v=>`Write a short ${v.channel} to ${v.who||"[person]"}. Goal: ${v.goal}.
+
+About me:
+${v.about||"(ask me first)"}
+
+Rules: a LinkedIn connection note is 300 characters max; an email is 120 words max, with a subject line that says why I'm writing. Say who I am in one line, give the specific connection in one line, then make ONE easy-to-agree-to ask (offer 2 time windows). A thank-you goes out within 24 hours, is 80 words max, and mentions one specific thing from the conversation. Never ask for a job directly in a first message. Give me 2 versions, then tell me when to follow up (once, after 7 days) and stop.
+${RULES}`},
+];
+
+const $=s=>document.querySelector(s);
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(t._h);t._h=setTimeout(()=>t.style.display="none",6000)}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+$("#tools").innerHTML=TOOLS.map(t=>`<button class="tool" onclick="openTool('${t.key}')"><b>${t.icon} ${t.title}</b><span>${t.sub}</span></button>`).join("");
+
+let current=null;
+function openTool(k){
+  current=TOOLS.find(t=>t.key===k);
+  const saved=JSON.parse(localStorage.getItem("cc.about")||'""');
+  $("#form").innerHTML=`<h2>${current.icon} ${current.title}</h2>`+current.fields.map(f=>{
+    const lab=`<label for="f-${f.id}">${f.label}${f.hint?` <small>${f.hint}</small>`:""}</label>`;
+    if(f.type==="select")return lab+`<select id="f-${f.id}">${f.opts.map(o=>`<option>${o}</option>`).join("")}</select>`;
+    if(f.type==="area")return lab+`<textarea id="f-${f.id}" placeholder="${esc(f.ph||"")}">${f.id==="about"?esc(saved):""}</textarea>`;
+    return lab+`<input id="f-${f.id}" placeholder="${esc(f.ph||"")}">`;
+  }).join("")+`
+  <div class="btns">
+    <button class="btn" onclick="go('chatgpt')">Open in ChatGPT</button>
+    <button class="btn" onclick="go('claude')">Open in Claude</button>
+    <button class="btn alt" onclick="go('gemini')">Open in Gemini</button>
+    <button class="btn alt" onclick="go('copy')">Just copy it</button>
+  </div>
+  <p class="note">If the chat box opens empty, paste with Ctrl+V or ⌘V (long-press on a phone) and press send.</p>`;
+  $("#form").classList.remove("hidden");
+  $("#form").scrollIntoView({behavior:"smooth"});
+}
+function values(){const v={};current.fields.forEach(f=>v[f.id]=($("#f-"+f.id).value||"").trim());if(v.about)localStorage.setItem("cc.about",JSON.stringify(v.about));return v}
+async function copy(text){
+  try{await navigator.clipboard.writeText(text);return true}catch(e){
+    const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand("copy")}catch(_){}ta.remove();return ok}
+}
+async function go(where){
+  const p=current.build(values()).replace(/\n{3,}/g,"\n\n");
+  const ok=await copy(p);
+  const q=encodeURIComponent(p), short=q.length<7000;
+  const url={chatgpt:"https://chatgpt.com/"+(short?"?q="+q:""),claude:"https://claude.ai/new"+(short?"?q="+q:""),gemini:"https://gemini.google.com/app"}[where];
+  if(url)window.open(url,"_blank","noopener");
+  toast(ok?(where==="copy"?"Copied. Paste it into any AI chat.":"Copied. If the chat box is empty, paste it (Ctrl/⌘+V) and press send."):"Couldn't copy automatically. Select the text and copy it.");
+  if(!ok)showRaw(p);
+}
+function showRaw(p){$("#form").insertAdjacentHTML("beforeend",`<textarea style="min-height:200px;margin-top:10px">${esc(p)}</textarea>`)}
+
+/* ---------- tracker ---------- */
+const STAGES=["To do","Writing it","Applied","Online test","Video interview","Interview","Assessment centre","Offer","Rejected","Withdrawn","Accepted"];
+const CLOSED=["Rejected","Withdrawn","Accepted"], WAITING=["Applied"];
+const EFFORT={"To do":3,"Writing it":2,"Online test":1.5,"Video interview":1.5,"Interview":3,"Assessment centre":4,"Offer":0.5};
+let apps=JSON.parse(localStorage.getItem("cc.apps")||"[]");
+$("#hours").value=localStorage.getItem("cc.hours")||6;
+function saveHours(){localStorage.setItem("cc.hours",$("#hours").value)}
+function persist(){localStorage.setItem("cc.apps",JSON.stringify(apps))}
+function today(){const d=new Date();d.setHours(0,0,0,0);return d}
+function parse(s){if(!s)return null;const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
+function days(s){const d=parse(s);return d?Math.round((d-today())/864e5):null}
+function due(a){return (a.stage==="To do"||a.stage==="Writing it")?(a.deadline||a.next_date):(a.next_date||"")}
+function score(a){
+  if(CLOSED.includes(a.stage)||WAITING.includes(a.stage))return null;
+  let dd=days(due(a)); if(dd===null)dd=30;
+  if(a.rolling&&(a.stage==="To do"||a.stage==="Writing it"))dd=Math.min(dd,3);
+  const pri={1:1.5,2:1,3:.6}[a.priority]||1, st=["To do","Writing it"].includes(a.stage)?1:1.3;
+  return 100/(Math.max(dd,0)+1)*pri*st;
+}
+function pill(a){
+  const dd=days(due(a));
+  if(CLOSED.includes(a.stage))return"";
+  if(dd===null)return a.rolling?`<span class="pill soon">rolling: apply early</span>`:"";
+  const fmt=parse(due(a)).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+  if(dd<0)return`<span class="pill late">${fmt} · passed</span>`;
+  return`<span class="pill ${dd<=3?"late":dd<=10?"soon":"fine"}">${fmt} · ${dd===0?"today":dd+"d left"}</span>`;
+}
+function addApp(){
+  const co=$("#a-co").value.trim(),role=$("#a-role").value.trim();
+  if(!co){toast("Add a company name");return}
+  apps.push({id:Date.now(),company:co,role,deadline:$("#a-dl").value,rolling:$("#a-roll").checked,priority:$("#a-pri").value,link:$("#a-link").value.trim(),stage:"To do",next_date:"",notes:""});
+  persist();["#a-co","#a-role","#a-dl","#a-link"].forEach(s=>$(s).value="");$("#a-roll").checked=false;render();toast("Added "+co);
+}
+function upd(id,k,v){const a=apps.find(x=>x.id==id);a[k]=v;if(k==="stage"&&CLOSED.includes(v))a.next_date="";if(k==="stage")a.updated=new Date().toISOString().slice(0,10);persist();render()}
+function del(id){if(confirm("Delete this application?")){apps=apps.filter(x=>x.id!=id);persist();render()}}
+function render(){
+  const open=apps.filter(a=>!CLOSED.includes(a.stage));
+  const ranked=open.map(a=>[score(a),a]).filter(x=>x[0]!==null).sort((x,y)=>y[0]-x[0]);
+  const late=ranked.filter(([s,a])=>days(due(a))!==null&&days(due(a))<0).map(x=>x[1]);
+  let budget=+$("#hours").value||6;const plan=[],cut=[];
+  ranked.forEach(([s,a])=>{if(late.includes(a))return;const e=EFFORT[a.stage]||2;if(e<=budget){plan.push([a,e]);budget-=e}else cut.push([a,e])});
+  const stale=apps.filter(a=>a.stage==="Applied"&&a.updated&&(today()-parse(a.updated))/864e5>=14);
+  const line=(a,e)=>`<li><b>${esc(a.company)}</b> ${esc(a.role)} · ${a.stage==="To do"?"apply":a.stage.toLowerCase()} ${pill(a)}${e?` · ~${e}h`:""}</li>`;
+  let h="";
+  if(!apps.length)h="<p class='note'>Add your applications below and this will tell you what to do first.</p>";
+  if(late.length)h+=`<p><b>⚠️ Deadline passed.</b> Check the company's careers page. If it's closed, set it to Withdrawn.</p><ul class="plan">${late.map(a=>line(a)).join("")}</ul>`;
+  if(plan.length)h+=`<p><b>✅ Do this week, in this order:</b></p><ul class="plan">${plan.map(([a,e])=>line(a,e)).join("")}</ul>`;
+  if(cut.length)h+=`<p><b>⏳ Doesn't fit this week.</b> Find more time or drop the lowest priority:</p><ul class="plan">${cut.map(([a,e])=>line(a,e)).join("")}</ul>`;
+  if(stale.length)h+=`<p><b>📭 Applied 2+ weeks ago with no news.</b> Send a polite chaser or move on:</p><ul class="plan">${stale.map(a=>line(a)).join("")}</ul>`;
+  if(apps.length&&!plan.length&&!late.length&&!cut.length)h+="<p>Nothing to do right now: you're waiting to hear back. Add more applications?</p>";
+  $("#plan").innerHTML=h;
+  const sorted=[...apps].sort((x,y)=>(CLOSED.includes(x.stage)-CLOSED.includes(y.stage))||((parse(due(x))||9e15)-(parse(due(y))||9e15)));
+  $("#list").innerHTML=apps.length?`<table><tr><th>Company / role</th><th>Stage</th><th>Next date <small>(test, interview…)</small></th><th></th></tr>`+sorted.map(a=>`<tr>
+    <td><b>${a.link?`<a href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.company)}</a>`:esc(a.company)}</b><br><small>${esc(a.role)}</small><br>${pill(a)}</td>
+    <td><select onchange="upd(${a.id},'stage',this.value)">${STAGES.map(s=>`<option${s===a.stage?" selected":""}>${s}</option>`).join("")}</select></td>
+    <td><input type="date" value="${a.next_date||""}" onchange="upd(${a.id},'next_date',this.value)"></td>
+    <td><button class="x" title="Delete" onclick="del(${a.id})">✕</button></td></tr>`).join("")+"</table>":"<p class='note'>Nothing yet.</p>";
+}
+function download(name,text,type){const b=new Blob([text],{type});const u=URL.createObjectURL(b);const l=document.createElement("a");l.href=u;l.download=name;l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function exportCSV(){
+  const cols=["company","role","stage","deadline","rolling","priority","next_date","link"];
+  const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  download("my-applications.csv",[cols.join(","),...apps.map(a=>cols.map(c=>q(a[c])).join(","))].join("\r\n"),"text/csv");
+}
+function exportICS(){
+  const ev=[];const stamp=new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z";
+  const ymd=s=>s.replace(/-/g,""), next=s=>{const d=parse(s);d.setDate(d.getDate()+1);return d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")};
+  apps.filter(a=>!CLOSED.includes(a.stage)).forEach(a=>{
+    if(a.deadline)ev.push([a.id+"-dl",a.deadline,`Deadline: ${a.company} ${a.role}`]);
+    if(a.next_date&&a.next_date!==a.deadline)ev.push([a.id+"-nx",a.next_date,`${a.stage}: ${a.company} ${a.role}`]);
+  });
+  if(!ev.length){toast("No dates to add yet");return}
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//career-coach//EN"];
+  ev.forEach(([u,d,s])=>L.push("BEGIN:VEVENT",`UID:${u}@career-coach`,`DTSTAMP:${stamp}`,`DTSTART;VALUE=DATE:${ymd(d)}`,`DTEND;VALUE=DATE:${next(d)}`,`SUMMARY:${s.replace(/[,;]/g,"\\$&")}`,"BEGIN:VALARM","TRIGGER:-P2D","ACTION:DISPLAY",`DESCRIPTION:${s.replace(/[,;]/g,"\\$&")}`,"END:VALARM","END:VEVENT"));
+  L.push("END:VCALENDAR");download("application-deadlines.ics",L.join("\r\n")+"\r\n","text/calendar");
+  toast("Open the downloaded file to add it to your calendar (with reminders 2 days before)");
+}
+function tab(t){["coach","track"].forEach(x=>{$("#"+x).classList.toggle("hidden",x!==t);$("#t-"+x).classList.toggle("on",x===t)});if(t==="track")render()}
+if(location.hash==="#track")tab("track");
+render();
+</script>
+</body>
+</html>
