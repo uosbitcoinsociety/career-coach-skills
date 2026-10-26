@@ -1,0 +1,16 @@
+{
+  "name": "career-coach",
+  "owner": {
+    "name": "UoS Bitcoin Society"
+  },
+  "metadata": {
+    "description": "Free AI careers coach for students, as Claude Code skills."
+  },
+  "plugins": [
+    {
+      "name": "career-coach",
+      "source": "./",
+      "description": "CV, applications tracker, what-to-apply-next, HireVue and interview practice."
+    }
+  ]
+}

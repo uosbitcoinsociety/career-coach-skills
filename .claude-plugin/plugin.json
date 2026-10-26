@@ -1,0 +1,9 @@
+{
+  "name": "career-coach",
+  "description": "Claude Code skills that take a student from blank page to offer: CV, finding roles, a deadline-aware application tracker, written answers, online tests, HireVue and live mock interviews.",
+  "version": "0.1.0",
+  "author": {
+    "name": "UoS Bitcoin Society"
+  },
+  "license": "MIT"
+}
