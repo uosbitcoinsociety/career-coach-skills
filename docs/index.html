@@ -2,103 +2,385 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Career Coach: free AI interview and application practice</title>
 <meta name="description" content="Free AI careers coach for students. Mock interviews, HireVue practice, CV help and an application tracker. No sign-up.">
+<meta name="theme-color" content="#f6f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1512" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="apple-mobile-web-app-title" content="Career Coach">
+<link rel="preload" href="fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+/* apply a saved theme before first paint, so there is no flash */
+(function(){try{var t=localStorage.getItem("cc.theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})();
+</script>
 <style>
-:root{--bg:#faf8f4;--card:#fff;--ink:#1c1b19;--mute:#6b665d;--line:#e6e1d8;--acc:#e8820c;--acc2:#b85f00;--ok:#2f7d4f;--warn:#b3261e}
-@media (prefers-color-scheme:dark){:root{--bg:#141311;--card:#1d1c19;--ink:#efece6;--mute:#a19b90;--line:#33302b;--acc:#f5a03a;--acc2:#ffc072}}
-*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
-.wrap{max-width:860px;margin:0 auto;padding:24px 18px 60px}
-h1{font-size:2rem;line-height:1.15;margin:.2em 0}h2{font-size:1.25rem;margin:0 0 .4em}
-.lede{color:var(--mute);margin:0 0 18px}
-nav.tabs{display:flex;gap:8px;margin:18px 0}
-nav.tabs button{flex:1;padding:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem}
-nav.tabs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.tool{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;text-align:left;color:var(--ink);font:inherit}
-.tool:hover{border-color:var(--acc)}.tool b{display:block;font-size:1.05rem}.tool span{color:var(--mute);font-size:.92rem}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}
-label{display:block;font-weight:600;margin:12px 0 4px;font-size:.95rem}label small{font-weight:400;color:var(--mute)}
-input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
-textarea{min-height:90px;resize:vertical}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.row{grid-template-columns:1fr}}
-.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.btn{padding:11px 16px;border-radius:9px;border:0;background:var(--acc);color:#1c1b19;font-weight:700;cursor:pointer;font-size:1rem;text-decoration:none}
-.btn.alt{background:transparent;border:1px solid var(--line);color:var(--ink)}
-.btn:hover{filter:brightness(1.05)}
-.note{font-size:.88rem;color:var(--mute);margin-top:10px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;font-weight:600;display:none;max-width:90vw;text-align:center;z-index:9}
-.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0 0}.steps li{counter-increment:s;padding:6px 0 6px 34px;position:relative}
-.steps li:before{content:counter(s);position:absolute;left:0;top:5px;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#1c1b19;font-weight:700;text-align:center;line-height:24px;font-size:.85rem}
-table{width:100%;border-collapse:collapse;font-size:.93rem}td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{color:var(--mute);font-weight:600}td select{padding:4px;font-size:.9rem}
-.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.8rem;font-weight:700}
-.late{background:#fde2df;color:var(--warn)}.soon{background:#fff1d6;color:#8a5300}.fine{background:#e1f2e7;color:var(--ok)}
-.plan li{margin:4px 0}.x{background:none;border:0;color:var(--mute);cursor:pointer;font-size:1.1rem}
-footer{margin-top:40px;color:var(--mute);font-size:.85rem;text-align:center}
-.hidden{display:none}a{color:var(--acc2)}
+/* Schibsted Grotesk, SIL Open Font License 1.1, see fonts/OFL.txt */
+@font-face{font-family:"Schibsted Grotesk";font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/schibsted-grotesk-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+/* Palette, Realtime Colors method: text / background / primary / secondary / accent, about 60-30-10.
+   Every pair used for text is WCAG AA or better; ratios are listed in the commit notes. */
+:root{
+  --text:#16201b; --bg:#f6f4ee; --surface:#fffdf8; --primary:#1d5c47; --on-primary:#fff;
+  --secondary:#e4ece5; --accent:#b4470f; --muted:#56605a; --line:#d9d6cc; --field:#7b837d;
+  --late-bg:#fbe9e2; --late:#9c2f12; --soon-bg:#fbf0d9; --soon:#7a4b00; --fine-bg:#e3f0e6; --fine:#1f6a3c;
+  --shadow:0 1px 2px rgba(22,32,27,.06),0 8px 24px -12px rgba(22,32,27,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --text:#ebefe9; --bg:#0f1512; --surface:#161e1a; --primary:#86d2ae; --on-primary:#0b1a13;
+  --secondary:#1d2924; --accent:#f2a25c; --muted:#a3ada6; --line:#2c3832; --field:#6d7a73;
+  --late-bg:#3a1c14; --late:#ffb59e; --soon-bg:#35290f; --soon:#f5cf7e; --fine-bg:#15301f; --fine:#93dcae;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -12px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme=dark]{
+  --text:#ebefe9; --bg:#0f1512; --surface:#161e1a; --primary:#86d2ae; --on-primary:#0b1a13;
+  --secondary:#1d2924; --accent:#f2a25c; --muted:#a3ada6; --line:#2c3832; --field:#6d7a73;
+  --late-bg:#3a1c14; --late:#ffb59e; --soon-bg:#35290f; --soon:#f5cf7e; --fine-bg:#15301f; --fine:#93dcae;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -12px rgba(0,0,0,.6); color-scheme:dark}
+
+/* Springs, sampled from a damped oscillator (no JS, no React) */
+:root{
+  --spring:linear(0, .0244, .0871, .1745, .2757, .3822, .4876, .5873, .6783, .7589, .8281, .886, .933, .97, .9981, 1.0185, 1.0323, 1.0408, 1.045, 1.046, 1.0445, 1.0415, 1.0373, 1.0326, 1.0277, 1.0229, 1.0183, 1.0142, 1.0106, 1.0075, 1.0049, 1.0028, 1.0012, .9999, .999, .9984, 1);
+  --spring-bouncy:linear(0, .0337, .1217, .2453, .3881, .5364, .6792, .8087, .9196, 1.0093, 1.077, 1.1236, 1.1511, 1.1624, 1.1605, 1.1487, 1.1301, 1.1075, 1.0834, 1.0597, 1.0378, 1.0186, 1.0029, .9907, .982, .9765, .9739, .9735, .975, .9777, .9812, .9851, .989, .9927, .996, .9988, 1);
+  --font:"Schibsted Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:120px}
+body{margin:0;font:400 17px/1.55 var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+::selection{background:var(--primary);color:var(--on-primary)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+a{color:var(--primary);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+h1,h2,h3{font-weight:750;letter-spacing:-.02em;line-height:1.1;text-wrap:balance;margin:0}
+p{margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.hidden{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* header + tabs */
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 94%,transparent);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:12px;min-height:60px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:750;font-size:1.05rem;letter-spacing:-.01em;color:var(--text);text-decoration:none;margin-right:auto;min-height:44px}
+.mark{width:30px;height:30px;border-radius:8px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center}
+.mark svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.iconbtn{flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer}
+nav.tabs{display:flex;gap:4px;padding:4px;background:var(--secondary);border-radius:14px}
+nav.tabs button{min-height:44px;padding:0 16px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:600 .97rem var(--font);cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap}
+nav.tabs button svg.i{width:19px;height:19px}
+nav.tabs button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+@media (max-width:640px){
+  .bar{padding-top:8px;padding-bottom:10px}
+  nav.tabs{order:3;flex-basis:100%}
+  nav.tabs button{flex:1;justify-content:center;padding:0 8px}
+}
+
+/* hero */
+.hero{display:grid;gap:36px;padding:44px 0 36px;align-items:start}
+@media (min-width:900px){.hero{grid-template-columns:1.15fr .85fr;gap:56px;padding:72px 0 56px}}
+.hero h1{font-size:clamp(2.2rem,1.4rem + 3.6vw,3.6rem);letter-spacing:-.035em;line-height:1.02;max-width:14ch}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.lede{margin-top:18px;font-size:1.12rem;color:var(--muted);max-width:52ch}
+.facts{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:20px;padding:0;list-style:none;font-weight:600;font-size:.95rem}
+.facts li{display:flex;align-items:center;gap:6px}
+.facts svg.i{width:18px;height:18px;color:var(--primary);stroke-width:2.4}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;align-items:center}
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+.howto h2{font-size:1.15rem}
+.howto ol{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:0}
+.howto li{display:grid;grid-template-columns:36px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.howto li:first-child{border-top:0;padding-top:4px}
+.howto .num{width:36px;height:36px;border-radius:50%;background:var(--secondary);color:var(--primary);font-weight:750;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.howto b{display:block;font-weight:700}
+.howto span{color:var(--muted);font-size:.95rem}
+.ais{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.ais i{font-style:normal;font-size:.82rem;font-weight:650;padding:2px 9px;border-radius:99px;background:var(--secondary);color:var(--text)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;border:1px solid transparent;background:var(--primary);color:var(--on-primary);font:700 1rem var(--font);cursor:pointer;text-decoration:none;letter-spacing:-.005em}
+.btn:hover{filter:brightness(1.08)}
+.btn.big{min-height:56px;padding:0 26px;font-size:1.08rem;border-radius:14px}
+.btn.alt{background:var(--surface);color:var(--text);border-color:var(--field)}
+.btn.ghost{background:transparent;color:var(--text);border-color:transparent;text-decoration:underline;text-underline-offset:4px;padding:0 10px}
+.btn svg.i{width:20px;height:20px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+@media (min-width:640px){.btns{display:flex;flex-wrap:wrap}}
+
+/* tools: one featured, then a list */
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:8px 0 16px}
+.section-head h2{font-size:1.5rem}
+.section-head p{color:var(--muted);font-size:.95rem}
+#tools{display:grid;gap:12px}
+@media (min-width:900px){#tools{grid-template-columns:1fr 1fr;align-items:start}}
+.tool{display:grid;grid-template-columns:44px 1fr 22px;gap:14px;align-items:center;width:100%;min-height:76px;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-radius:16px;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.tool .ic{width:44px;height:44px;border-radius:12px;background:var(--secondary);color:var(--primary);display:grid;place-items:center}
+.tool b{display:block;font-weight:700;font-size:1.05rem;letter-spacing:-.01em}
+.tool span.sub{display:block;color:var(--muted);font-size:.93rem;line-height:1.4;margin-top:2px}
+.tool .go{color:var(--muted)}
+.tool:hover{border-color:var(--field)}
+.tool[aria-pressed=true]{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}
+.tool.feature{grid-template-columns:1fr;gap:16px;padding:24px;background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.tool.feature .ic{background:color-mix(in srgb,var(--on-primary) 16%,transparent);color:var(--on-primary);width:52px;height:52px}
+.tool.feature b{font-size:1.5rem;letter-spacing:-.02em}
+.tool.feature span.sub{color:var(--on-primary);opacity:.92;font-size:1rem;max-width:40ch}
+.tool.feature .go{display:inline-flex;align-items:center;gap:8px;color:var(--on-primary);font-weight:700}
+.tool.feature[aria-pressed=true]{box-shadow:0 0 0 3px var(--accent)}
+@media (min-width:900px){.tool.feature{align-self:stretch;align-content:space-between;padding:32px}.tool.feature b{font-size:2rem}}
+.others{display:grid;gap:10px}
+
+/* panels + forms */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:16px;box-shadow:var(--shadow)}
+@media (min-width:640px){.panel{padding:30px}}
+.panel h2{font-size:1.35rem;display:flex;align-items:center;gap:12px}
+.panel h2 .ic{width:40px;height:40px;border-radius:12px;background:var(--secondary);color:var(--primary);display:grid;place-items:center;flex:none}
+.formhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.formintro{color:var(--muted);margin-top:8px;font-size:.97rem}
+label{display:block;font-weight:650;margin:18px 0 6px;font-size:.97rem}
+label small{display:block;font-weight:400;color:var(--muted);font-size:.88rem;margin-top:1px}
+input,select,textarea{width:100%;min-height:48px;padding:11px 13px;border:1px solid var(--field);border-radius:12px;background:var(--bg);color:var(--text);font:400 1rem/1.4 var(--font)}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:var(--primary)}
+textarea{min-height:110px;resize:vertical}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 21px,calc(100% - 14px) 21px;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
+input[type=checkbox]{width:22px;height:22px;min-height:0;margin:0;accent-color:var(--primary);flex:none}
+.check{display:flex;gap:12px;align-items:flex-start;font-weight:500;min-height:44px;padding-top:4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}@media(max-width:560px){.row{grid-template-columns:1fr}}
+.note{font-size:.9rem;color:var(--muted);margin-top:12px}
+
+/* the "paste it" result: impossible to miss */
+.result{margin-top:22px;border-radius:16px;border:2px solid var(--primary);background:var(--secondary);padding:18px}
+.result.warn{border-color:var(--accent);background:var(--soon-bg)}
+.result h3{font-size:1.15rem;display:flex;gap:10px;align-items:center}
+.result h3 svg.i{color:var(--primary)}
+.result.warn h3 svg.i{color:var(--accent)}
+.result p{margin-top:8px}
+.result ol{margin:10px 0 0;padding-left:22px}
+.result ol li{margin:4px 0}
+.result textarea{margin-top:12px;min-height:150px;font-size:.88rem;background:var(--surface)}
+.result .btns{margin-top:12px}
+kbd{font:600 .85em var(--font);padding:1px 6px;border-radius:6px;border:1px solid var(--field);background:var(--surface)}
+
+/* tracker */
+.trackhead{padding:40px 0 8px}
+.trackhead h1{font-size:clamp(2rem,1.5rem + 2.4vw,3rem);letter-spacing:-.03em}
+.trackhead p{color:var(--muted);margin-top:10px;max-width:56ch}
+.week{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px;margin-top:20px;box-shadow:var(--shadow)}
+@media (min-width:640px){.week{padding:32px}}
+.weektop{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between}
+.weektop h2{font-size:1.6rem}
+.hours{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hours label{flex-basis:100%}
+@media (min-width:640px){.hours label{flex-basis:auto}}
+.hours label{margin:0 6px 0 0;font-size:.92rem;color:var(--muted);font-weight:600}
+.hours input{width:72px;text-align:center;font-weight:700;font-size:1.1rem;font-variant-numeric:tabular-nums}
+.hours .iconbtn{border-color:var(--field)}
+#plan{margin-top:18px}
+.grp{margin-top:22px}
+.grp:first-child{margin-top:0}
+.grp-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.02rem}
+.grp-title svg.i{width:20px;height:20px}
+.grp-title + .grp-hint{color:var(--muted);font-size:.93rem;margin-top:2px}
+.plan{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.plan li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:12px 14px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
+.plan li .who b{font-weight:700}
+.plan li .meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:4px;font-size:.9rem;color:var(--muted)}
+.plan .dot{width:10px;height:10px;border-radius:50%;background:var(--field);margin-top:8px}
+ol.plan.do{counter-reset:p}
+ol.plan.do li{counter-increment:p}
+ol.plan.do li::before{content:counter(p);width:34px;height:34px;border-radius:50%;background:var(--primary);color:var(--on-primary);font-weight:750;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+ol.plan.do li .dot{display:none}
+ol.plan.do li{background:var(--secondary);border-color:transparent;padding:14px 16px}
+.grp.do .grp-title{color:var(--primary);font-size:1.1rem}
+.grp.late{border:1px solid var(--late);background:var(--late-bg);border-radius:16px;padding:14px 16px;color:var(--late)}
+.grp.late .grp-hint{color:var(--text)}
+.grp.late .plan li{background:var(--surface)}
+.empty{padding:18px;border:1px dashed var(--field);border-radius:16px;color:var(--muted)}
+.empty b{color:var(--text)}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.late .pill.late,.pill.late{background:var(--late-bg);color:var(--late)}.pill.soon{background:var(--soon-bg);color:var(--soon)}.pill.fine{background:var(--fine-bg);color:var(--fine)}
+.grp.late .pill.late{border:1px solid var(--late)}
+.cols{display:grid;gap:16px}
+@media (min-width:900px){.cols{grid-template-columns:.9fr 1.1fr;align-items:start}}
+.apps{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.app{display:grid;grid-template-columns:1fr auto;gap:10px 12px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.app.closed{opacity:.75}
+.app .co b{font-weight:700}.app .co small{display:block;color:var(--muted)}
+.app .co .pill{margin-top:6px}
+.app .ctl{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.app .ctl label{margin:0 0 4px;font-size:.82rem;color:var(--muted);font-weight:600}
+.x{width:44px;height:44px;border-radius:12px;border:1px solid transparent;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center}
+.x:hover{border-color:var(--line);color:var(--late)}
+
+/* phone hint + footer */
+.extras{display:grid;gap:16px;margin-top:56px}
+@media (min-width:900px){.extras{grid-template-columns:1fr 1fr}}
+.extra{border-top:1px solid var(--line);padding-top:18px}
+.extra h2{font-size:1.1rem;display:flex;gap:10px;align-items:center}
+.extra h2 svg.i{color:var(--primary)}
+.extra p,.extra li{color:var(--muted);font-size:.95rem}
+.extra ul{margin:8px 0 0;padding-left:20px}
+.extra li{margin:4px 0}
+.extra li b{color:var(--text)}
+footer{margin:48px 0 0;padding:24px 0 calc(40px + env(safe-area-inset-bottom));border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+footer a{color:var(--text);display:inline-block;padding:12px 0;margin:-12px 0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--text);color:var(--bg);padding:14px 18px;border-radius:14px;font-weight:600;display:none;width:max-content;max-width:min(92vw,520px);text-align:center;z-index:9;box-shadow:var(--shadow)}
+
+/* Motion: transform and opacity only, and only when the visitor allows it */
+@media (prefers-reduced-motion:no-preference){
+  .tool,.btn,.iconbtn{transition:transform .6s var(--spring),border-color .2s,box-shadow .2s,filter .2s}
+  .tool:hover{transform:translateY(-2px)}
+  .tool:active,.btn:active,.iconbtn:active{transform:scale(.97);transition-duration:.15s}
+  .tool .go svg{transition:transform .6s var(--spring)}
+  .tool:hover .go svg{transform:translateX(4px)}
+  .opening{animation:rise .75s var(--spring-bouncy) both}
+  .result{animation:rise .7s var(--spring) both}
+  @keyframes rise{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+  ::view-transition-old(main),::view-transition-new(main){animation-duration:.42s}
+  ::view-transition-old(main){animation:vt-out .22s ease-in both}
+  ::view-transition-new(main){animation:vt-in .55s var(--spring) both}
+  @keyframes vt-out{to{opacity:0;transform:translateY(-8px)}}
+  @keyframes vt-in{from{opacity:0;transform:translateY(14px)}}
+}
+main{view-transition-name:main}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Your free AI careers coach</h1>
-  <p class="lede">Mock interviews, video-interview practice, CV help and an application tracker. No sign-up, nothing to install. It works with the ChatGPT, Claude or Gemini account you already have, free ones included.</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8.5 21h7"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="m16 10 5-3v10l-5-3"/></symbol>
+  <symbol id="i-cv" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4M13 20h7"/></symbol>
+  <symbol id="i-test" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7h7M8.5 11.5h1M12 11.5h1M15 11.5h.5M8.5 15h1M12 15h1M15 15v2.5M8.5 18h1M12 18h1"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10 14"/><path d="M21 3 14.5 21l-4.5-7-7-4.5z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v14M6 12l6 6 6-6M5 21h14"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+</svg>
 
-  <nav class="tabs">
-    <button id="t-coach" class="on" onclick="tab('coach')">🎤 Practise & write</button>
-    <button id="t-track" onclick="tab('track')">📋 My applications</button>
-  </nav>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="./" aria-label="Career Coach, home">
+      <span class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v6a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V15h0.5A2.5 2.5 0 0 1 5 12.5z"/><path d="m9 9.5 2 2 4-4"/></svg></span>
+      Career Coach
+    </a>
+    <nav class="tabs" aria-label="Sections">
+      <button id="t-coach" class="on" aria-current="page" onclick="tab('coach')"><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>Practise &amp; write</button>
+      <button id="t-track" onclick="tab('track')"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg>My applications</button>
+    </nav>
+    <button class="iconbtn" id="theme" onclick="toggleTheme()" aria-label="Switch to dark theme"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+  </div>
+</header>
 
+<main class="wrap">
   <section id="coach">
-    <div class="grid" id="tools"></div>
-    <div class="panel hidden" id="form"></div>
-    <div class="panel" id="how">
-      <h2>How it works</h2>
-      <ol class="steps">
-        <li>Pick what you want to practise and fill in the boxes. The more detail you give, the better the coaching.</li>
-        <li>Press <b>Open in ChatGPT</b> (or Claude / Gemini). Your coaching instructions are copied for you.</li>
-        <li>If the chat box is empty, paste: <b>Ctrl+V</b> on a laptop, or long-press on a phone. Then press send.</li>
-      </ol>
-      <p class="note">Your details only go to the AI you choose. This site has no server and doesn't save anything you type here.</p>
+    <div class="hero">
+      <div>
+        <h1>Practise interviews and applications with an AI coach. <em>Free.</em></h1>
+        <p class="lede">Mock interviews, video-interview practice, CV help and an application tracker. It works with the ChatGPT, Claude or Gemini account you already have, free ones included.</p>
+        <ul class="facts">
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>No sign-up</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Nothing to install</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Stays in your browser</li>
+        </ul>
+        <div class="cta">
+          <button class="btn big" onclick="openTool('interview')">Practise an interview <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <a class="btn ghost" href="#tools-head">See all 6 tools</a>
+        </div>
+      </div>
+      <div class="howto" id="how">
+        <h2>How it works</h2>
+        <ol>
+          <li><span class="num">1</span><div><b>Fill in a few boxes</b><span>The company, the role and a bit about you. More detail means better coaching.</span></div></li>
+          <li><span class="num">2</span><div><b>We open your AI chat with a coach's instructions</b><span>They're copied for you too, so if the chat box is empty you just paste and send.</span><div class="ais"><i>ChatGPT</i><i>Claude</i><i>Gemini</i></div></div></li>
+          <li><span class="num">3</span><div><b>It coaches you</b><span>One question at a time, honest scores, and better versions of your own answers.</span></div></li>
+        </ol>
+      </div>
     </div>
+
+    <div class="section-head" id="tools-head"><h2>What do you want to practise?</h2></div>
+    <div id="tools"></div>
+    <div class="panel hidden" id="form"></div>
   </section>
 
   <section id="track" class="hidden">
-    <div class="panel">
-      <h2>What to do next</h2>
-      <div id="plan"></div>
-      <label>Hours you can spend on applications this week</label>
-      <input id="hours" type="number" min="1" max="40" value="6" style="max-width:120px" onchange="saveHours();render()">
+    <div class="trackhead">
+      <h1>My applications</h1>
+      <p>Add what you're applying for. We'll put it in order for you: closest deadlines and rolling applications first, fitted into the hours you have.</p>
     </div>
-    <div class="panel">
-      <h2>Add an application</h2>
-      <div class="row">
-        <div><label>Company</label><input id="a-co" placeholder="e.g. Citi"></div>
-        <div><label>Role</label><input id="a-role" placeholder="e.g. Markets Summer Internship"></div>
+    <div class="week">
+      <div class="weektop">
+        <h2>Your plan for this week</h2>
+        <div class="hours">
+          <label for="hours">Hours I have this week</label>
+          <button class="iconbtn" type="button" aria-label="One hour less" onclick="stepHours(-1)"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button>
+          <input id="hours" type="number" inputmode="numeric" min="1" max="40" value="6" onchange="saveHours();render()">
+          <button class="iconbtn" type="button" aria-label="One hour more" onclick="stepHours(1)"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
+        </div>
       </div>
-      <div class="row">
-        <div><label>Deadline <small>(leave blank if rolling)</small></label><input id="a-dl" type="date"></div>
-        <div><label>How much do you want it?</label><select id="a-pri"><option value="1">A lot</option><option value="2" selected>Normal</option><option value="3">Backup</option></select></div>
-      </div>
-      <label><input id="a-roll" type="checkbox" style="width:auto"> Rolling: they fill places as applications come in, so earlier is better</label>
-      <label>Link <small>(optional)</small></label><input id="a-link" placeholder="https://">
-      <div class="btns"><button class="btn" onclick="addApp()">Add</button></div>
+      <div id="plan" aria-live="polite"></div>
     </div>
-    <div class="panel">
-      <h2>All applications</h2>
-      <div id="list"></div>
-      <div class="btns">
-        <button class="btn alt" onclick="exportCSV()">Download spreadsheet (CSV)</button>
-        <button class="btn alt" onclick="exportICS()">Add deadlines to my calendar</button>
+    <div class="cols">
+      <div class="panel" id="add">
+        <h2>Add an application</h2>
+        <label for="a-co">Company</label><input id="a-co" placeholder="e.g. Citi" autocomplete="off">
+        <label for="a-role">Role</label><input id="a-role" placeholder="e.g. Markets Summer Internship" autocomplete="off">
+        <div class="row">
+          <div><label for="a-dl">Deadline <small>Leave blank if rolling</small></label><input id="a-dl" type="date"></div>
+          <div><label for="a-pri">How much do you want it? <small>Used to break ties</small></label><select id="a-pri"><option value="1">A lot</option><option value="2" selected>Normal</option><option value="3">Backup</option></select></div>
+        </div>
+        <label class="check"><input id="a-roll" type="checkbox"> <span>Rolling: they fill places as applications come in, so earlier is better</span></label>
+        <label for="a-link">Link <small>Optional</small></label><input id="a-link" placeholder="https://" inputmode="url" autocomplete="off">
+        <div class="btns" style="grid-template-columns:1fr"><button class="btn" onclick="addApp()"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg>Add application</button></div>
       </div>
-      <p class="note">Saved in this browser only. Nobody else can see it, including us. If you clear your browser data it's gone, so download the spreadsheet now and then.</p>
+      <div class="panel">
+        <h2>All applications</h2>
+        <div id="list"></div>
+        <div class="btns">
+          <button class="btn alt" onclick="exportCSV()"><svg class="i" aria-hidden="true"><use href="#i-down"/></svg>Download spreadsheet (CSV)</button>
+          <button class="btn alt" onclick="exportICS()"><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg>Add deadlines to my calendar</button>
+        </div>
+        <p class="note">Saved in this browser only. Nobody else can see it, including us. If you clear your browser data it's gone, so download the spreadsheet now and then.</p>
+      </div>
     </div>
   </section>
 
-  <footer>Free and open source. Made by the University of Sheffield Bitcoin Society. Prefer Claude Code? <a href="https://github.com/uosbitcoinsociety/career-coach-skills">Install the skills</a>.</footer>
-</div>
-<div class="toast" id="toast"></div>
+  <div class="extras">
+    <div class="extra">
+      <h2><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>Everything stays in your browser</h2>
+      <p>No account, no server, no tracking. What you type goes only to the AI you choose, and your applications are saved on this device.</p>
+    </div>
+    <div class="extra" id="phone">
+      <h2><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Add it to your phone</h2>
+      <ul>
+        <li><b>iPhone:</b> open this page in Safari, tap Share, then Add to Home Screen.</li>
+        <li><b>Android:</b> open it in Chrome, tap the ⋮ menu, then Install app (or Add to Home screen).</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <span>Free and open source. Made by the University of Sheffield Bitcoin Society.</span>
+    <span>Prefer Claude Code? <a href="https://github.com/uosbitcoinsociety/career-coach-skills">Install the skills</a></span>
+  </footer>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* ---------- coaching tools ---------- */
@@ -116,7 +398,7 @@ const COMMON = [
 const ABOUT = {id:"about",label:"About you",hint:"Degree, year, uni, jobs, societies, projects. Pasting your whole CV works too.",type:"area",ph:"2nd year Maths at Sheffield. Part-time barista. Treasurer of a society…"};
 
 const TOOLS = [
- {key:"interview",icon:"🎤",title:"Mock interview",sub:"A realistic interviewer who asks follow-ups and gives you a verdict",
+ {key:"interview",icon:"mic",title:"Mock interview",sub:"A realistic interviewer who asks follow-ups and gives you a verdict",
   fields:[...COMMON,{id:"round",label:"Type of interview",type:"select",opts:["First round","Final round / superday","Technical","Behavioural (competency)","Case interview (consulting)","Not sure"]},
           {id:"date",label:"When is it?",ph:"e.g. next Thursday"},ABOUT,{id:"ad",label:"Job description",hint:"Optional, but paste it if you have it.",type:"area"}],
   build:v=>`You are an experienced interviewer at ${v.company||"[company]"} interviewing me for: ${v.role||"[role]"}. Interview type: ${v.round}. ${v.date?`My real interview is ${v.date}.`:""}
@@ -135,7 +417,7 @@ Run a realistic mock interview:
 ${RULES}
 Start now with the first question.`},
 
- {key:"video",icon:"🎥",title:"Video interview (HireVue)",sub:"Timed one-way video interview practice with scores and model answers",
+ {key:"video",icon:"video",title:"Video interview (HireVue)",sub:"Timed one-way video interview practice with scores and model answers",
   fields:[...COMMON,ABOUT],
   build:v=>`I have a one-way video interview (HireVue-style) for ${v.role||"[role]"} at ${v.company||"[company]"}. Coach me through a practice run.
 
@@ -150,7 +432,7 @@ How the session works:
 Once, before we start, give 4 short tips for the recording itself (camera, light, notes, practice question).
 ${RULES}`},
 
- {key:"cv",icon:"📄",title:"CV: write, review or tailor",sub:"One page, readable by recruiters' screening software, with every bullet backed by a number",
+ {key:"cv",icon:"cv",title:"CV: write, review or tailor",sub:"One page, readable by recruiters' screening software, with every bullet backed by a number",
   fields:[{id:"mode",label:"What do you need?",type:"select",opts:["Review my CV and score it","Tailor my CV to a specific job","Build my CV from scratch"]},
           {id:"cvtext",label:"Your CV or experience",hint:"Paste your CV as text. Starting from scratch? Just list what you've done.",type:"area"},
           {id:"ad",label:"Job description",hint:"Only needed for tailoring.",type:"area"},{id:"country",label:"Country you're applying in",ph:"UK"}],
@@ -167,7 +449,7 @@ CV rules: one page. Most recent first. Education first for students. Bullets: st
 At the end, give me the full finished CV in clean text I can paste into Word or Google Docs.
 ${RULES}`},
 
- {key:"answers",icon:"✍️",title:"Application questions & cover letters",sub:"\"Why us?\", \"why this role?\" and STAR answers, kept to the word limit",
+ {key:"answers",icon:"pen",title:"Application questions & cover letters",sub:"\"Why us?\", \"why this role?\" and STAR answers, kept to the word limit",
   fields:[...COMMON,{id:"question",label:"The exact question",ph:"e.g. Why do you want to work at Citi? (300 words)",type:"area"},{id:"limit",label:"Word or character limit",ph:"300 words"},ABOUT],
   build:v=>`Help me answer an application question for ${v.role||"[role]"} at ${v.company||"[company]"}.
 
@@ -188,7 +470,7 @@ How to work:
 5. Give the word count. Remind me ONCE to rewrite it in my own words, because many employers check for AI-written answers.
 ${RULES}`},
 
- {key:"tests",icon:"🧮",title:"Online test practice",sub:"Numerical, verbal, logical and situational-judgement questions with the fast methods",
+ {key:"tests",icon:"test",title:"Online test practice",sub:"Numerical, verbal, logical and situational-judgement questions with the fast methods",
   fields:[{id:"company",label:"Company (if known)",ph:"e.g. PwC"},{id:"test",label:"Test type",type:"select",opts:["Numerical reasoning","Verbal reasoning","Logical / inductive reasoning","Situational judgement (SJT)","Not sure: mixed"]}],
   build:v=>`I have an online assessment${v.company?` for ${v.company}`:""}: ${v.test}. Coach me.
 1. Explain the format in 3 bullets: question types, time per question, and how it's scored.
@@ -200,7 +482,7 @@ ${RULES}`},
 3. At the end: my score, the kind of mistakes I kept making, and 2 drills to fix them.
 ${RULES}`},
 
- {key:"network",icon:"🤝",title:"Messages to recruiters & alumni",sub:"LinkedIn notes, emails, thank-yous and follow-ups",
+ {key:"network",icon:"send",title:"Messages to recruiters & alumni",sub:"LinkedIn notes, emails, thank-yous and follow-ups",
   fields:[{id:"who",label:"Who are you messaging?",ph:"e.g. Sheffield alumna, Associate in rates sales at Barclays"},
           {id:"goal",label:"What do you want?",type:"select",opts:["A 15-minute chat for advice","A thank-you after an interview or event","A follow-up (no reply yet)","Advice on applying to their team"]},
           {id:"channel",label:"Where?",type:"select",opts:["LinkedIn connection note","LinkedIn message","Email"]},ABOUT],
@@ -214,16 +496,31 @@ ${RULES}`},
 ];
 
 const $=s=>document.querySelector(s);
+const ico=(n,c="i")=>`<svg class="${c}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const motionOK=()=>window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
 function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(t._h);t._h=setTimeout(()=>t.style.display="none",6000)}
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
-$("#tools").innerHTML=TOOLS.map(t=>`<button class="tool" onclick="openTool('${t.key}')"><b>${t.icon} ${t.title}</b><span>${t.sub}</span></button>`).join("");
+/* theme: follows the device, with a toggle remembered in localStorage */
+function isDark(){const a=document.documentElement.getAttribute("data-theme");return a?a==="dark":matchMedia("(prefers-color-scheme: dark)").matches}
+function paintThemeBtn(){const d=isDark(),b=$("#theme");b.innerHTML=ico(d?"sun":"moon");b.setAttribute("aria-label",d?"Switch to light theme":"Switch to dark theme")}
+function toggleTheme(){const t=isDark()?"light":"dark";document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("cc.theme",t)}catch(e){}paintThemeBtn()}
+paintThemeBtn();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",paintThemeBtn);
+
+const [FEATURE,...REST]=TOOLS;
+$("#tools").innerHTML=
+  `<button class="tool feature" data-k="${FEATURE.key}" aria-pressed="false" onclick="openTool('${FEATURE.key}')"><span class="ic">${ico(FEATURE.icon)}</span><span><b>${FEATURE.title}</b><span class="sub">${FEATURE.sub}. The best place to start.</span></span><span class="go">Start practising ${ico("arrow")}</span></button>`+
+  `<div class="others">`+REST.map(t=>`<button class="tool" data-k="${t.key}" aria-pressed="false" onclick="openTool('${t.key}')"><span class="ic">${ico(t.icon)}</span><span><b>${t.title}</b><span class="sub">${t.sub}</span></span><span class="go">${ico("arrow")}</span></button>`).join("")+`</div>`;
 
 let current=null;
 function openTool(k){
+  if($("#coach").classList.contains("hidden"))showTab("coach");
   current=TOOLS.find(t=>t.key===k);
+  document.querySelectorAll(".tool").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.k===k)));
   const saved=JSON.parse(localStorage.getItem("cc.about")||'""');
-  $("#form").innerHTML=`<h2>${current.icon} ${current.title}</h2>`+current.fields.map(f=>{
+  $("#form").innerHTML=`<div class="formhead"><h2><span class="ic">${ico(current.icon)}</span>${current.title}</h2><button class="x" onclick="closeTool()" aria-label="Close this tool">${ico("x")}</button></div>
+  <p class="formintro">${current.sub}. Fill in what you can; anything you leave blank, the AI will ask you about.</p>`+current.fields.map(f=>{
     const lab=`<label for="f-${f.id}">${f.label}${f.hint?` <small>${f.hint}</small>`:""}</label>`;
     if(f.type==="select")return lab+`<select id="f-${f.id}">${f.opts.map(o=>`<option>${o}</option>`).join("")}</select>`;
     if(f.type==="area")return lab+`<textarea id="f-${f.id}" placeholder="${esc(f.ph||"")}">${f.id==="about"?esc(saved):""}</textarea>`;
@@ -233,18 +530,22 @@ function openTool(k){
     <button class="btn" onclick="go('chatgpt')">Open in ChatGPT</button>
     <button class="btn" onclick="go('claude')">Open in Claude</button>
     <button class="btn alt" onclick="go('gemini')">Open in Gemini</button>
-    <button class="btn alt" onclick="go('copy')">Just copy it</button>
+    <button class="btn alt" onclick="go('copy')">${ico("copy")}Just copy it</button>
   </div>
-  <p class="note">If the chat box opens empty, paste with Ctrl+V or ⌘V (long-press on a phone) and press send.</p>`;
-  $("#form").classList.remove("hidden");
-  $("#form").scrollIntoView({behavior:"smooth"});
+  <p class="note">Your coaching instructions are copied as well. If the chat box opens empty, paste with Ctrl+V or ⌘V (long-press on a phone) and press send.</p>
+  <div id="result"></div>`;
+  const f=$("#form");f.classList.remove("hidden");
+  if(motionOK()){f.classList.remove("opening");void f.offsetWidth;f.classList.add("opening")}
+  f.scrollIntoView({behavior:motionOK()?"smooth":"auto"});
 }
+function closeTool(){$("#form").classList.add("hidden");document.querySelectorAll(".tool").forEach(b=>b.setAttribute("aria-pressed","false"));$("#tools-head").scrollIntoView({behavior:motionOK()?"smooth":"auto"})}
 function values(){const v={};current.fields.forEach(f=>v[f.id]=($("#f-"+f.id).value||"").trim());if(v.about)localStorage.setItem("cc.about",JSON.stringify(v.about));return v}
 async function copy(text){
   try{await navigator.clipboard.writeText(text);return true}catch(e){
     const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();
     let ok=false;try{ok=document.execCommand("copy")}catch(_){}ta.remove();return ok}
 }
+let lastPrompt="";
 async function go(where){
   const p=current.build(values()).replace(/\n{3,}/g,"\n\n");
   const ok=await copy(p);
@@ -252,9 +553,26 @@ async function go(where){
   const url={chatgpt:"https://chatgpt.com/"+(short?"?q="+q:""),claude:"https://claude.ai/new"+(short?"?q="+q:""),gemini:"https://gemini.google.com/app"}[where];
   if(url)window.open(url,"_blank","noopener");
   toast(ok?(where==="copy"?"Copied. Paste it into any AI chat.":"Copied. If the chat box is empty, paste it (Ctrl/⌘+V) and press send."):"Couldn't copy automatically. Select the text and copy it.");
-  if(!ok)showRaw(p);
+  showResult(where,ok,url,(where==="chatgpt"||where==="claude")&&short,p);
 }
-function showRaw(p){$("#form").insertAdjacentHTML("beforeend",`<textarea style="min-height:200px;margin-top:10px">${esc(p)}</textarea>`)}
+/* What happens next, shown every time, so the paste step can't be missed */
+function showResult(where,ok,url,prefilled,p){
+  lastPrompt=p;
+  const name={chatgpt:"ChatGPT",claude:"Claude",gemini:"Gemini"}[where];
+  const paste=`<ol><li>Click in the chat box. On a phone, press and hold it.</li><li>Paste: <kbd>Ctrl</kbd>+<kbd>V</kbd> on Windows, <kbd>⌘</kbd>+<kbd>V</kbd> on a Mac, or tap Paste on a phone.</li><li>Press send.</li></ol>`;
+  let h;
+  if(!ok)h=`<div class="result warn"><h3>${ico("alert")}Copy this text yourself</h3><p>Your browser blocked automatic copying. Tap in the box below, select all of it, copy it, then paste it into ${name||"any AI chat"}.</p>`;
+  else if(where==="copy")h=`<div class="result"><h3>${ico("check")}Copied</h3><p>Open any AI chat and paste it in.</p>${paste}`;
+  else if(prefilled)h=`<div class="result"><h3>${ico("check")}${name} opened in a new tab</h3><p>Your instructions should already be in the chat box: press send. <b>If the box is empty</b>, they're copied, so paste them:</p>${paste}`;
+  else h=`<div class="result warn"><h3>${ico("alert")}Paste your instructions into ${name}</h3><p>${where==="gemini"?"Gemini can't be filled in for you":"These instructions are too long to fill in for you"}, so the chat box will be empty. They're already copied:</p>${paste}`;
+  h+=`<label for="raw">Your coaching instructions</label><textarea id="raw" readonly>${esc(p)}</textarea>
+  <div class="btns"><button class="btn alt" onclick="copyAgain()">${ico("copy")}Copy again</button>${url?`<a class="btn alt" href="${esc(url)}" target="_blank" rel="noopener">Open ${name} again</a>`:""}</div></div>`;
+  const r=$("#result");r.innerHTML=h;
+  if(!ok){const t=$("#raw");t.focus();t.select()}
+  r.scrollIntoView({behavior:motionOK()?"smooth":"auto",block:"nearest"});
+}
+async function copyAgain(){const ok=await copy(lastPrompt);toast(ok?"Copied again.":"Couldn't copy automatically. Select the text and copy it.");if(!ok){const t=$("#raw");t.focus();t.select()}}
+function showRaw(p){showResult("copy",false,null,false,p)}
 
 /* ---------- tracker ---------- */
 const STAGES=["To do","Writing it","Applied","Online test","Video interview","Interview","Assessment centre","Offer","Rejected","Withdrawn","Accepted"];
@@ -263,6 +581,7 @@ const EFFORT={"To do":3,"Writing it":2,"Online test":1.5,"Video interview":1.5,"
 let apps=JSON.parse(localStorage.getItem("cc.apps")||"[]");
 $("#hours").value=localStorage.getItem("cc.hours")||6;
 function saveHours(){localStorage.setItem("cc.hours",$("#hours").value)}
+function stepHours(d){const h=$("#hours");h.value=Math.min(40,Math.max(1,(+h.value||6)+d));saveHours();render()}
 function persist(){localStorage.setItem("cc.apps",JSON.stringify(apps))}
 function today(){const d=new Date();d.setHours(0,0,0,0);return d}
 function parse(s){if(!s)return null;const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
@@ -285,7 +604,7 @@ function pill(a){
 }
 function addApp(){
   const co=$("#a-co").value.trim(),role=$("#a-role").value.trim();
-  if(!co){toast("Add a company name");return}
+  if(!co){toast("Add a company name");$("#a-co").focus();return}
   apps.push({id:Date.now(),company:co,role,deadline:$("#a-dl").value,rolling:$("#a-roll").checked,priority:$("#a-pri").value,link:$("#a-link").value.trim(),stage:"To do",next_date:"",notes:""});
   persist();["#a-co","#a-role","#a-dl","#a-link"].forEach(s=>$(s).value="");$("#a-roll").checked=false;render();toast("Added "+co);
 }
@@ -298,21 +617,22 @@ function render(){
   let budget=+$("#hours").value||6;const plan=[],cut=[];
   ranked.forEach(([s,a])=>{if(late.includes(a))return;const e=EFFORT[a.stage]||2;if(e<=budget){plan.push([a,e]);budget-=e}else cut.push([a,e])});
   const stale=apps.filter(a=>a.stage==="Applied"&&a.updated&&(today()-parse(a.updated))/864e5>=14);
-  const line=(a,e)=>`<li><b>${esc(a.company)}</b> ${esc(a.role)} · ${a.stage==="To do"?"apply":a.stage.toLowerCase()} ${pill(a)}${e?` · ~${e}h`:""}</li>`;
+  const line=(a,e)=>`<li><span class="dot"></span><div class="who"><b>${esc(a.company)}</b> ${esc(a.role)}<div class="meta"><span>${a.stage==="To do"?"apply":a.stage.toLowerCase()}</span>${pill(a)}${e?`<span>~${e}h</span>`:""}</div></div></li>`;
+  const grp=(cls,icon,title,hint,items,tag="ul")=>`<div class="grp ${cls}"><p class="grp-title">${ico(icon)}${title}</p>${hint?`<p class="grp-hint">${hint}</p>`:""}<${tag} class="plan ${cls}">${items}</${tag}></div>`;
   let h="";
-  if(!apps.length)h="<p class='note'>Add your applications below and this will tell you what to do first.</p>";
-  if(late.length)h+=`<p><b>⚠️ Deadline passed.</b> Check the company's careers page. If it's closed, set it to Withdrawn.</p><ul class="plan">${late.map(a=>line(a)).join("")}</ul>`;
-  if(plan.length)h+=`<p><b>✅ Do this week, in this order:</b></p><ul class="plan">${plan.map(([a,e])=>line(a,e)).join("")}</ul>`;
-  if(cut.length)h+=`<p><b>⏳ Doesn't fit this week.</b> Find more time or drop the lowest priority:</p><ul class="plan">${cut.map(([a,e])=>line(a,e)).join("")}</ul>`;
-  if(stale.length)h+=`<p><b>📭 Applied 2+ weeks ago with no news.</b> Send a polite chaser or move on:</p><ul class="plan">${stale.map(a=>line(a)).join("")}</ul>`;
-  if(apps.length&&!plan.length&&!late.length&&!cut.length)h+="<p>Nothing to do right now: you're waiting to hear back. Add more applications?</p>";
+  if(!apps.length)h=`<div class="empty"><b>Nothing here yet.</b> Add your applications below and this will tell you what to do first, in order.</div>`;
+  if(plan.length)h+=grp("do","check","Do this week, in this order:","",plan.map(([a,e])=>line(a,e)).join(""),"ol");
+  if(late.length)h+=grp("late","alert","Deadline passed.","Check the company's careers page. If it's closed, set it to Withdrawn.",late.map(a=>line(a)).join(""));
+  if(cut.length)h+=grp("cut","clock","Doesn't fit this week.","Find more time or drop the lowest priority:",cut.map(([a,e])=>line(a,e)).join(""));
+  if(stale.length)h+=grp("stale","mail","Applied 2+ weeks ago with no news.","Send a polite chaser or move on:",stale.map(a=>line(a)).join(""));
+  if(apps.length&&!plan.length&&!late.length&&!cut.length)h+=`<div class="empty">Nothing to do right now: you're waiting to hear back. Add more applications?</div>`;
   $("#plan").innerHTML=h;
   const sorted=[...apps].sort((x,y)=>(CLOSED.includes(x.stage)-CLOSED.includes(y.stage))||((parse(due(x))||9e15)-(parse(due(y))||9e15)));
-  $("#list").innerHTML=apps.length?`<table><tr><th>Company / role</th><th>Stage</th><th>Next date <small>(test, interview…)</small></th><th></th></tr>`+sorted.map(a=>`<tr>
-    <td><b>${a.link?`<a href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.company)}</a>`:esc(a.company)}</b><br><small>${esc(a.role)}</small><br>${pill(a)}</td>
-    <td><select onchange="upd(${a.id},'stage',this.value)">${STAGES.map(s=>`<option${s===a.stage?" selected":""}>${s}</option>`).join("")}</select></td>
-    <td><input type="date" value="${a.next_date||""}" onchange="upd(${a.id},'next_date',this.value)"></td>
-    <td><button class="x" title="Delete" onclick="del(${a.id})">✕</button></td></tr>`).join("")+"</table>":"<p class='note'>Nothing yet.</p>";
+  $("#list").innerHTML=apps.length?`<ul class="apps">`+sorted.map(a=>`<li class="app${CLOSED.includes(a.stage)?" closed":""}">
+    <div class="co"><b>${a.link?`<a href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.company)}</a>`:esc(a.company)}</b><small>${esc(a.role)}</small>${pill(a)}</div>
+    <button class="x" title="Delete" aria-label="Delete ${esc(a.company)}" onclick="del(${a.id})">${ico("x")}</button>
+    <div class="ctl"><div><label for="s-${a.id}">Stage</label><select id="s-${a.id}" onchange="upd(${a.id},'stage',this.value)">${STAGES.map(s=>`<option${s===a.stage?" selected":""}>${s}</option>`).join("")}</select></div>
+    <div><label for="n-${a.id}">Next date <small style="display:inline">(test, interview…)</small></label><input id="n-${a.id}" type="date" value="${a.next_date||""}" onchange="upd(${a.id},'next_date',this.value)"></div></div></li>`).join("")+"</ul>":"<p class='note'>Nothing yet.</p>";
 }
 function download(name,text,type){const b=new Blob([text],{type});const u=URL.createObjectURL(b);const l=document.createElement("a");l.href=u;l.download=name;l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function exportCSV(){
@@ -333,8 +653,14 @@ function exportICS(){
   L.push("END:VCALENDAR");download("application-deadlines.ics",L.join("\r\n")+"\r\n","text/calendar");
   toast("Open the downloaded file to add it to your calendar (with reminders 2 days before)");
 }
-function tab(t){["coach","track"].forEach(x=>{$("#"+x).classList.toggle("hidden",x!==t);$("#t-"+x).classList.toggle("on",x===t)});if(t==="track")render()}
-if(location.hash==="#track")tab("track");
+function showTab(t){["coach","track"].forEach(x=>{$("#"+x).classList.toggle("hidden",x!==t);const b=$("#t-"+x);b.classList.toggle("on",x===t);if(x===t)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});if(t==="track")render()}
+function tab(t){
+  if(document.startViewTransition&&motionOK()&&!document.hidden&&$("#"+t).classList.contains("hidden")){
+    try{const vt=document.startViewTransition(()=>showTab(t));[vt.ready,vt.finished,vt.updateCallbackDone].forEach(p=>p&&p.catch(()=>{}));return}catch(e){}
+  }
+  showTab(t);
+}
+if(location.hash==="#track")showTab("track");
 render();
 </script>
 </body>
